@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Folclore Brasileiro • Era X</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* ================= VARIÁVEIS ================= */
+:root{
+  --bg:#0b2c7e;
+  --txt:#f5f5f5; /* AJUSTE DE CONTRASTE */
+  --accent:#00ff22;
+  --accent2:#ff8c00;
+}
+
+/* ================= BODY ================= */
+body{
+  font-family:'Montserrat',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  min-height:100vh;
+  padding:60px 80px; /* MAIS ESPAÇO */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:
+    radial-gradient(circle at 50% 55%, rgba(255,140,0,.35), transparent 100%),
+    url("imagens/deusa.ilustração.jpg") center/cover no-repeat;
+}
+
+/* CAMADA CINEMATOGRÁFICA */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(0,0,0,0.65) 0%,
+      rgba(0,0,0,0.35) 45%,
+      rgba(0,0,0,0.05) 70%
+    );
+  z-index:0;
+}
+
+/* GLOW EXISTENTE (NÃO REMOVIDO) */
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center, rgba(0,255,34,.25), transparent 65%);
+  animation:glow 4s infinite alternate;
+  z-index:0;
+}
+
+@keyframes glow{
+  from{opacity:.5}
+  to{opacity:1}
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(6px);
+  padding:14px 24px;
+  border-radius:14px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:26px;
+  font-size:14px;
+}
+
+.nav-links a{
+  color:#ffffff;
+  text-decoration:none;
+  position:relative;
+  cursor:pointer;
+  text-shadow:0 2px 6px rgba(0,0,0,0.6);
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:0;
+  height:2px;
+  background:var(--accent);
+  transition:.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+.login-btn{
+  border-radius:999px;
+  border:1px solid white;
+  padding:6px 16px;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  text-shadow:0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* ================= HERO CONTENT ================= */
+.hero-content{
+  max-width:560px;
+  margin-bottom:120px;
+  margin-left:40px;
+  z-index:1;
+  animation:fadeUp 1.4s ease forwards;
+}
+
+.hero-content h1{
+  font-size:56px;
+  color:var(--accent);
+  margin-bottom:14px;
+  text-shadow:0 6px 18px rgba(0,0,0,0.65);
+}
+
+.hero-content h2{
+  font-size:22px;
+  font-weight:300;
+  margin-bottom:18px;
+  text-shadow:0 4px 12px rgba(0,0,0,0.6);
+}
+
+.hero-content p{
+  font-size:15px;
+  line-height:1.7;
+  max-width:520px;
+  text-shadow:0 4px 12px rgba(0,0,0,0.55);
+}
+
+/* ================= STORY ================= */
+.story{
+  position:relative;
+  padding:180px 80px;
+  background:
+    linear-gradient(to bottom, rgba(2,8,23,.9), rgba(2,8,23,.7)),
+    url("imagens/curupira.jpg") center/cover no-repeat;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s ease;
+}
+
+.story.enredo{
+  background:
+    linear-gradient(to bottom, rgba(2,8,23,.9), rgba(2,8,23,.7)),
+    url("imagens/deusestupi.jpg") center/cover no-repeat;
+}
+
+.story.onde{
+  background:
+    linear-gradient(to bottom, rgba(2,8,23,.9), rgba(2,8,23,.7)),
+    url("imagens/caipora.jpg") center/cover no-repeat;
+}
+
+.story.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.story h2{
+  font-size:42px;
+}
+
+.subtitle{
+  font-size:18px;
+  opacity:.85;
+  margin:10px 0 30px;
+}
+
+.divider{
+  width:120px;
+  height:3px;
+  background:var(--accent2);
+  margin-bottom:30px;
+}
+
+.story p{
+  max-width:720px;
+  font-size:16px;
+  line-height:1.8;
+  opacity:.9;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:.6;
+}
+
+/* ================= ADMIN ================= */
+#admin-toggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  padding:10px 18px;
+  border-radius:999px;
+  background:var(--accent);
+  border:none;
+  cursor:pointer;
+  z-index:9999;
+}
+
+#admin-panel{
+  position:fixed;
+  top:0;
+  right:-420px;
+  width:420px;
+  height:100vh;
+  background:#020817;
+  padding:30px;
+  transition:.4s;
+  z-index:9998;
+}
+
+#admin-panel.open{
+  right:0;
+}
+
+#admin-panel input,
+#admin-panel textarea{
+  width:100%;
+  margin-bottom:12px;
+  padding:8px;
+  background:#0b1025;
+  color:white;
+  border:1px solid #222;
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero" id="topo">
+
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-icon">F</div>
+      <div>
+        <strong>Folclore Brasileiro</strong><br>
+        <small>Era X</small>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a onclick="scrollToId('inicio')">Início</a>
+      <a onclick="scrollToId('enredo')">Enredo</a>
+      <a onclick="scrollToId('onde')">Onde se passa</a>
+      <a href="personagens.html">Personagens</a>
+      <a href="equipe.html">Equipe</a>
+      <button class="login-btn">Login</button>
+    </nav>
+  </header>
+
+  <div class="hero-content">
+    <h1>Folclore Brasileiro<br>Era X</h1>
+    <h2>Servidor de RP • Aventura • Mitologia</h2>
+    <p>
+      Tal site se trata como um projeto para um servidor no discord de rp com o foco sendo mitologico, a nossa famosa cultura brasileira,
+       adjunto disso também tendo o foco em inspirar o pessoal se aprofundar mais com a nossa própria cultura.
+       E um fator segundário e ajudar na divulgação do jogo Lendas sobre o Folclore Brasileiro.
+    
+    </p>
+  </div>
+
+</section>
+
+<section class="story" id="inicio">
+  <h2>Início</h2>
+  <p class="subtitle">O primeiro passo em um mundo esquecido</p>
+  <div class="divider"></div>
+  <p>
+   Passo 1: Junte-se à tribo agora mesmo! <br> <br>
+Entre no servidor do Discord: https://discord.gg/GhvgUu8DUD e devore as regras essenciais + o guia completo do acampamento. É rapidinho e te libera para o mundo incrível que espera! 🌿✨
+<br><br>
+Passo 2: Domine os sistemas e vire pro!
+Com tudo lido, explore os sistemas exclusivos do servidor e entenda como tudo rola por aqui. É como desbloquear o mapa de um jogo épico – fácil, divertido e viciante! 🗺️💥
+<br><br>
+Passo 3: Crie seu herói e comece a saga!
+Agora sim: crie seu personagem único e lance-se na aventura! Ao longo do tempo (ou de imediato kkkk 😂), você vai se aprofundar numa cultura rica e misteriosa do servidor, despertar seus poderes insanos e desvendar os segredos sombrios que a Amazônia esconde... Temas ancestrais, batalhas lendárias e reviravoltas que vão te deixar viciado! Quem sabe o que você vai descobrir primeiro? Uma maldição antiga ou um aliado poderoso? 🌲🗡️🔮
+<br> <br>
+O que tá esperando? Clique no link, entre e viva a lenda! Vamos nessa? 👊
+  </p>
+</section>
+
+<section class="story enredo" id="enredo">
+  <h2>O Tempo Antes do Tempo</h2>
+  <p class="subtitle">Quando o mito se torna realidade</p>
+  <div class="divider"></div>
+  <p>
+   No princípio, tudo era escuridão e silêncio, um ovo cósmico flutuando no vazio infinito chamado Guaraci (o céu sem fim). Dos primeiros sussurros nasceram os deuses primordiais: Tupã, o trovão criador que moldou a terra com seus raios; Nhanderuvuçu, o pai antigo que soprou vida nas sementes da existência; e Ñanderuvu, a avó sábia que teceu as estrelas como fios de algodão sagrado. Eles rasgaram o ovo, e dele jorrou o Yvy (a terra firme), os rios serpenteantes e a Ka'aguy Porã (floresta bela). Da lama primordial emergiram os primeiros humanos, filhos de Jakairá (a mãe das águas), para povoar o mundo sob a vigilância dos deuse
+<br><br>
+Os humanos surgiram do barro e do sopro divino. Não eram senhores da terra, mas parte dela. Caçavam, cantavam, sonhavam — e os deuses caminhavam entre eles, <u> invisíveis</u>, porém atentos.
+Esse tempo ficou conhecido como A Era da Harmonia, quando o mundo respirava em uníssono.
+<br><br>
+<h2>A Aproximação dos Deuses</h2> <br>
+<h6>(O início da mudança)</h6>
+<br>
+Por milênios, os deuses reinavam em equilíbrio perfeito desde o Morondaba (o céu elevado). Tupã guiava com justiça, lançando raios contra o caos; Jurupari, guardião das flautas sagradas, protegia os rituais; e Ceiu, o sol benevolente, aquecia as plantações. Mas o tempo corroeu essa ordem. Alguns deuses, seduzidos pela fragilidade humana — seus amores intensos, danças ao luar e histórias ao redor das fogueiras —, desceram à terra. Iara, a sereia das águas doces, apaixonou-se por pescadores e trocou sua imortalidade por risos mortais; Curupira, protetor das matas, relaxou sua fúria trocando guardas por brincadeiras com crianças indígenas.
+<br>
+Alguns deuses tornaram-se mais próximos:
+<br><br>
+<strong>Guaraci</strong>: Encantado com a persistência humana, passou a abençoar indivíduos específicos.
+<br><br>
+<strong>Jaci</strong>: Desceu em sonhos, apaixonando-se por histórias de amor e perda.
+<br><br>
+Espíritos menores passaram a assumir formas humanas por longos períodos.
+<br><br>
+Essa convivência trouxe prosperidade… mas também dependência.
+Os humanos começaram a pedir mais do que precisavam.
+E alguns deuses, mais relaxados e complacentes, passaram a interferir demais no destino mortal. <br> <br>
+<h2> irá de Anhangã</h2><br>
+Essa proximidade os tornou vulneráveis. tornou a terra com diversos filhos dos deuses, Conflitos irromperam: <strong Anhangã strong/>, o espírito do mal e da discórdia, espírito caído de Tupã, via aquilo tudo como profanação ao divino, ele viu fraqueza  deles como oportunidade. Ele semeou inveja entre os deuses distantes — alguns se isolaram em cavernas esquecidas ou viraram ecos nos ventos —, sugando sua força vital. Os céus escureceram, rios secaram, e os humanos sofreram pragas. Anhangã, agora inchado de poder sombrio, proclamou: "Tupã sonha preguiçoso! Eu forjarei a nova ordem, onde humanos me adorarão como rei absoluto!"
+  </p>
+</section>
+
+<section class="story onde" id="onde">
+  <h2>Onde se passa</h2>
+  <p class="subtitle">Um Brasil que você nunca viu</p>
+  <div class="divider"></div>
+  <p>
+    <li>Florestas vivas, cidades erguidas sobre maldições antigas e vilarejos esquecidos pelo tempo.</li>
+  </p>
+</section>
+
+<footer>
+  © Era X • Folclore Brasileiro
+</footer>
+
+<button id="admin-toggle">Admin</button>
+
+<div id="admin-panel">
+  <h2>Painel Admin</h2>
+  <input placeholder="Título Hero">
+  <textarea placeholder="Descrição Hero"></textarea>
+  <button style="margin-top:10px">Salvar</button>
+</div>
+
+<script>
+function scrollToId(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+const toggle=document.getElementById("admin-toggle");
+const panel=document.getElementById("admin-panel");
+
+toggle.onclick=()=>panel.classList.toggle("open");
+
+/* ANIMAÇÃO CINEMATOGRÁFICA AO ROLAR */
+const stories=document.querySelectorAll(".story");
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:0.2});
+
+stories.forEach(sec=>observer.observe(sec));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Admin — Era X</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:Montserrat;
+  background:#020817;
+  color:#fff;
+  padding:40px;
+}
+
+h1{margin-bottom:10px}
+section{
+  background:rgba(255,255,255,.05);
+  padding:30px;
+  border-radius:20px;
+  margin-bottom:40px;
+  max-width:700px;
+}
+
+label{
+  font-size:13px;
+  opacity:.8;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0 18px;
+  background:#050d25;
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  border-radius:10px;
+}
+
+button{
+  padding:10px 22px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:#00ff22;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Painel Administrativo — Era X</h1>
+<p style="opacity:.7;margin-bottom:30px">Modo BETA • Configurações locais</p>
+
+<!-- CONFIGURAÇÕES DO SITE -->
+<section>
+<h2>Configuração Global</h2>
+
+<label>Cor principal</label>
+<input type="color" id="primary">
+
+<label>Fonte global</label>
+<select id="a-font">
+  <option value="Montserrat">Montserrat</option>
+  <option value="Arial">Arial</option>
+  <option value="Georgia">Georgia</option>
+</select>
+
+<label>Título do Hero</label>
+<input id="a-title">
+
+<label>Descrição do Hero</label>
+<textarea id="a-desc"></textarea>
+
+<label>
+  <input type="checkbox" id="adminMode">
+  Ativar Modo Admin (BETA)
+</label>
+
+<br><br>
+<button onclick="saveSite()">Salvar Site</button>
+</section>
+
+<!-- PERSONAGENS -->
+<section>
+<h2>Adicionar Personagem</h2>
+
+<label>Nome</label>
+<input id="name">
+
+<label>Tipo</label>
+<select id="type">
+  <option value="entidade">Entidade</option>
+  <option value="humano">Humano</option>
+  <option value="criatura">Criatura</option>
+</select>
+
+<label>Descrição</label>
+<textarea id="desc"></textarea>
+
+<label>Imagem (URL)</label>
+<input id="image">
+
+<label>Cor do Nome</label>
+<input type="color" id="color" value="#00ff22">
+
+<button onclick="saveChar()">Salvar Personagem</button>
+</section>
+
+<script src="js/admin.js"></script>
+<!-- BOTÃO ADMIN GLOBAL -->
+<button id="admin-toggle" style="
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:9999;
+padding:10px 18px;
+border-radius:999px;
+background:#00ff22;
+border:none;
+cursor:pointer;">
+Admin
+</button>
+
+<button onclick="resetSite()" style="background:#ff3b3b;margin-left:10px">
+  Apagar Visual
+</button>
+<hr>
+<button onclick="resetAll()" style="background:#8b0000;width:100%">
+  RESETAR TUDO (PERIGO)
+</button>
+
+<!-- PAINEL ADMIN GLOBAL -->
+<div id="admin-panel" style="
+position:fixed;
+top:0;
+right:-420px;
+width:420px;
+height:100vh;
+background:#020817;
+padding:30px;
+transition:.4s;
+z-index:9998;
+overflow:auto;">
+<h2>Painel Admin</h2>
+
+<h4>Visual</h4>
+<input id="a-color" type="color">
+<select id="a-font">
+<option>Montserrat</option>
+<option>Arial</option>
+<option>Georgia</option>
+</select>
+
+<textarea id="a-title" placeholder="Título Hero"></textarea>
+<textarea id="a-desc" placeholder="Descrição Hero"></textarea>
+
+<button onclick="saveSite()">Salvar Visual</button>
+
+<hr>
+
+<h4>Adicionar Personagem</h4>
+<input id="c-name" placeholder="Nome">
+<select id="c-type">
+<option value="entidade">Entidade</option>
+<option value="humano">Humano</option>
+<option value="criatura">Criatura</option>
+</select>
+
+<textarea id="c-desc" placeholder="Descrição"></textarea>
+<input type="file" id="c-image">
+
+<button onclick="saveChar()">Salvar Personagem</button>
+</div>
+
+<script src="js/core.js" defer></script>
+<script src="js/admin-global.js" defer></script>
+
+</body>
+</html>

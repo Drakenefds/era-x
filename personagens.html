@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personagens | Era X</title>
+  <meta name="description" content="Catálogo de entidades, proles e criaturas do folclore brasileiro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page floating-shell">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Folclore Brasileiro - Era X">
+      <span class="brand-mark">F</span>
+      <span>
+        <strong>Folclore Brasileiro</strong>
+        <small>Catálogo Vivo</small>
+      </span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-menu">
+      <a href="index.html">Início</a>
+      <a href="sistemas.html#leveis">Leveis</a>
+      <a href="sistemas.html#arvores">Proles</a>
+      <a href="sistemas.html#graca">Graça</a>
+      <a class="active" href="personagens.html">Personagens</a>
+      <a href="equipe.html">Equipe</a>
+      <a class="classic-login" href="admin.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero inner-hero" style="--hero-image:url('imagens/curupira.jpg')">
+      <div class="hero-copy">
+        <p class="eyebrow">Entidades, proles e criaturas</p>
+        <h1>Personagens</h1>
+        <p>Fichas rápidas para consulta, expansão de lore e organização de poderes no RPG.</p>
+      </div>
+    </section>
+
+    <section class="page-main">
+      <div class="toolbar">
+        <div class="filters" aria-label="Filtros de personagens">
+          <button class="active" type="button" data-filter="all">Todos</button>
+          <button type="button" data-filter="entidade">Entidades</button>
+          <button type="button" data-filter="humano">Humanos</button>
+          <button type="button" data-filter="criatura">Criaturas</button>
+          <button type="button" data-filter="prole">Proles</button>
+        </div>
+        <a class="button secondary" href="admin.html">Adicionar ficha</a>
+      </div>
+
+      <div class="cards" id="characterCards"></div>
+    </section>
+  </main>
+
+  <div id="wikiModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="wikiName">
+      <button class="close-btn" type="button" aria-label="Fechar ficha" data-close-modal>&times;</button>
+      <div class="modal-top">
+        <img id="wikiImage" class="wiki-img" alt="">
+        <div>
+          <p id="wikiTitle" class="eyebrow"></p>
+          <h2 id="wikiName"></h2>
+          <div class="wiki-info">
+            <span><strong>Tipo:</strong> <span id="wikiType"></span></span>
+            <span><strong>Região:</strong> <span id="wikiRegion"></span></span>
+            <span><strong>Tags:</strong> <span id="wikiTag"></span></span>
+          </div>
+          <p id="wikiDesc"></p>
+        </div>
+      </div>
+      <div class="wiki-tabs" id="wikiTabs"></div>
+      <div id="wikiTabContent" class="wiki-content"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <strong>Era X</strong>
+    <span>Catálogo editável pelo painel admin.</span>
+  </footer>
+
+  <a class="floating-admin" href="admin.html" aria-label="Abrir painel admin">Admin</a>
+
+  <script src="js/site.js"></script>
+  <script src="js/personagens.js"></script>
+</body>
+</html>

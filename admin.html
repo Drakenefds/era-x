@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Era X</title>
+  <meta name="description" content="Painel local com login, contas e personagens em SQLite para Era X.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page floating-shell admin-page admin-density-comfort">
+  <div class="admin-scroll-meter" aria-hidden="true"><span data-scroll-meter></span></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Folclore Brasileiro - Era X">
+      <span class="brand-mark">F</span>
+      <span>
+        <strong>Folclore Brasileiro</strong>
+        <small>Painel Admin</small>
+      </span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-menu">
+      <a href="index.html">Inicio</a>
+      <a href="sistemas.html#leveis">Leveis</a>
+      <a href="sistemas.html#arvores">Proles</a>
+      <a href="sistemas.html#graca">Graca</a>
+      <a href="personagens.html">Personagens</a>
+      <a class="classic-login" href="admin.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="page-main admin-main">
+    <div class="admin-console">
+      <div class="section-heading admin-heading">
+        <p class="eyebrow">Banco local SQLite</p>
+        <h1>Painel Administrativo</h1>
+        <p>Central de conteudo, fichas, tags e ajustes visuais do painel.</p>
+      </div>
+
+      <div class="admin-metrics" data-admin-metrics hidden>
+        <article>
+          <small>Fichas</small>
+          <strong data-metric-characters>0</strong>
+        </article>
+        <article>
+          <small>Tags</small>
+          <strong data-metric-tags>0</strong>
+        </article>
+        <article>
+          <small>Contas</small>
+          <strong data-metric-users>0</strong>
+        </article>
+        <article>
+          <small>Acesso</small>
+          <strong data-metric-role>-</strong>
+        </article>
+      </div>
+
+      <section class="admin-status" data-api-status>
+        <strong>Verificando banco...</strong>
+        <span>Se voce abriu o HTML direto, rode `python server.py` no terminal.</span>
+      </section>
+
+      <div class="admin-layout admin-auth-layout">
+        <section class="admin-section login-card admin-reveal" data-login-panel>
+          <div class="admin-section-title">
+            <span>01</span>
+            <div>
+              <h2>Entrar</h2>
+              <p class="muted-text">Apenas contas autorizadas podem cadastrar fichas.</p>
+            </div>
+          </div>
+          <label>
+            Usuario
+            <input id="login-username" autocomplete="username" placeholder="admin">
+          </label>
+          <label>
+            Senha
+            <input id="login-password" type="password" autocomplete="current-password" placeholder="Senha do admin">
+          </label>
+          <button class="primary" type="button" data-login>Entrar no banco</button>
+        </section>
+
+        <section class="admin-section session-card admin-reveal" data-session-panel hidden>
+          <div class="admin-section-title">
+            <span>OK</span>
+            <div>
+              <h2>Sessao</h2>
+              <p class="muted-text" data-session-text>Conectado.</p>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button class="secondary-button" type="button" data-refresh-admin>Atualizar dados</button>
+            <button class="danger" type="button" data-logout>Sair</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="admin-layout admin-workspace" data-admin-content hidden>
+        <div class="admin-stack">
+          <details class="admin-section admin-collapsible admin-reveal" data-admin-only open>
+            <summary>
+              <span class="admin-summary-kicker">Acesso</span>
+              <strong>Contas e cargos</strong>
+            </summary>
+            <div class="admin-section-body">
+              <p class="muted-text">Somente admins podem criar novas contas.</p>
+              <div class="admin-form-grid">
+                <label>
+                  Novo usuario
+                  <input id="new-username" autocomplete="off" placeholder="ex: narrador01">
+                </label>
+                <label>
+                  Senha temporaria
+                  <input id="new-password" type="password" autocomplete="new-password" placeholder="minimo 8 caracteres">
+                </label>
+                <label>
+                  Cargo
+                  <select id="new-role">
+                    <option value="editor">Editor</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="role-preview-grid" data-role-preview>
+                <article data-role-card="editor">
+                  <small>Editor</small>
+                  <strong>Conteudo e tags</strong>
+                  <p>Cria fichas, cria tags, distribui tags e consulta associacoes.</p>
+                </article>
+                <article data-role-card="admin">
+                  <small>Admin</small>
+                  <strong>Controle total</strong>
+                  <p>Faz tudo do editor, cria contas, remove tags e gerencia acessos.</p>
+                </article>
+              </div>
+
+              <div class="admin-actions">
+                <button class="primary" type="button" data-create-user>Criar conta</button>
+              </div>
+            </div>
+          </details>
+
+          <details class="admin-section admin-collapsible admin-reveal" data-admin-only>
+            <summary>
+              <span class="admin-summary-kicker">Equipe</span>
+              <strong>Contas criadas</strong>
+            </summary>
+            <div class="admin-section-body">
+              <div class="user-list" data-user-list></div>
+            </div>
+          </details>
+
+          <details class="admin-section admin-collapsible tag-admin admin-reveal" open>
+            <summary>
+              <span class="admin-summary-kicker">Organizacao</span>
+              <strong>Tags e atribuicoes</strong>
+            </summary>
+            <div class="admin-section-body">
+              <div class="tag-create-row">
+                <label>
+                  Nova tag
+                  <input id="tag-name" placeholder="ex: medo, mata, evento">
+                </label>
+                <label>
+                  Cor
+                  <input id="tag-color" type="color" value="#e3a331">
+                </label>
+              </div>
+              <button class="primary" type="button" data-create-tag>Criar tag</button>
+
+              <div class="tag-divider"></div>
+
+              <div class="tag-tools-grid">
+                <div>
+                  <label>
+                    Ficha para distribuir tags
+                    <select id="tag-character-select">
+                      <option value="">Carregando fichas...</option>
+                    </select>
+                  </label>
+                  <div class="tag-chip-list" data-tag-checks></div>
+                  <div class="admin-actions" style="margin-top:14px">
+                    <button class="primary" type="button" data-save-character-tags>Salvar tags da ficha</button>
+                    <button class="secondary-button" type="button" data-refresh-tags>Atualizar tags</button>
+                  </div>
+                </div>
+                <aside class="tag-inspector" data-tag-inspector>
+                  <small>Mapa da tag</small>
+                  <strong>Escolha uma tag</strong>
+                  <p>Clique em qualquer tag abaixo para ver as fichas conectadas.</p>
+                </aside>
+              </div>
+
+              <div class="tag-list" data-tag-list></div>
+            </div>
+          </details>
+
+          <details class="admin-section admin-collapsible admin-reveal">
+            <summary>
+              <span class="admin-summary-kicker">Aparencia</span>
+              <strong>Estudio do painel</strong>
+            </summary>
+            <div class="admin-section-body">
+              <div class="visual-editor-grid">
+                <div class="visual-control-panel">
+                  <p class="muted-text">Escolha por aparencia, nao por codigo. A mudanca aparece na previa antes de salvar.</p>
+                  <div class="admin-form-grid">
+                    <label>
+                      Tema pronto
+                      <select id="a-preset">
+                        <option value="classic">Classico da mata</option>
+                        <option value="gold">Arquivo dourado</option>
+                        <option value="river">Rio noturno</option>
+                        <option value="ember">Brasa ritual</option>
+                      </select>
+                    </label>
+                    <label>
+                      Cor de destaque
+                      <input type="color" id="a-color" value="#e3a331">
+                    </label>
+                    <label>
+                      Fonte do painel
+                      <select id="a-font">
+                        <option value="Montserrat">Moderna</option>
+                        <option value="Arial">Simples</option>
+                        <option value="Georgia">Livro antigo</option>
+                      </select>
+                    </label>
+                    <label>
+                      Densidade
+                      <select id="a-density">
+                        <option value="comfort">Confortavel</option>
+                        <option value="compact">Compacta</option>
+                        <option value="wide">Ampla</option>
+                      </select>
+                    </label>
+                    <label>
+                      Movimento
+                      <select id="a-motion">
+                        <option value="soft">Suave</option>
+                        <option value="calm">Calmo</option>
+                        <option value="none">Sem animacao</option>
+                      </select>
+                    </label>
+                    <label>
+                      Aviso visual
+                      <input id="a-note" placeholder="ex: Revisar fichas novas hoje">
+                    </label>
+                  </div>
+
+                  <details class="admin-advanced-editor">
+                    <summary>Modo tecnico opcional</summary>
+                    <label>
+                      CSS local do admin
+                      <textarea id="a-custom-css" class="code-editor" spellcheck="false" placeholder=".admin-panel { border-color: #e3a331; }"></textarea>
+                    </label>
+                    <label>
+                      Bloco HTML local
+                      <textarea id="a-custom-html" class="code-editor" spellcheck="false" placeholder="<strong>Aviso:</strong> revisar fichas novas hoje."></textarea>
+                    </label>
+                  </details>
+                </div>
+
+                <aside class="visual-preview-panel" data-visual-preview>
+                  <div class="visual-preview-top">
+                    <span>Previa segura</span>
+                    <strong data-preview-title>Classico da mata</strong>
+                  </div>
+                  <div class="visual-before-after">
+                    <article>
+                      <small>Atual</small>
+                      <div class="mini-admin-card is-before">
+                        <span></span>
+                        <strong>Painel atual</strong>
+                        <p>Como esta salvo agora.</p>
+                      </div>
+                    </article>
+                    <article>
+                      <small>Depois</small>
+                      <div class="mini-admin-card is-after" data-mini-preview>
+                        <span></span>
+                        <strong>Painel ajustado</strong>
+                        <p data-mini-preview-text>Veja a mudanca antes de confirmar.</p>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="admin-html-preview" data-admin-html-preview></div>
+                  <div class="visual-change-box" data-visual-confirm hidden>
+                    <strong>Confirmar mudancas</strong>
+                    <ul data-visual-change-list></ul>
+                    <div class="admin-actions">
+                      <button class="primary" type="button" data-confirm-admin-visual>Confirmar e salvar</button>
+                      <button class="secondary-button" type="button" data-cancel-admin-visual>Cancelar previa</button>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+              <div class="admin-actions">
+                <button class="primary" type="button" data-save-site>Revisar antes de aplicar</button>
+                <button class="secondary-button" type="button" data-preview-admin-visual>Atualizar previa</button>
+                <button class="danger" type="button" data-reset-site>Apagar visual</button>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <aside class="admin-panel admin-reveal">
+          <div class="admin-section-title">
+            <span>+</span>
+            <div>
+              <h2>Adicionar ficha</h2>
+              <p class="muted-text">Personagens, criaturas, entidades, proles e NPCs.</p>
+            </div>
+          </div>
+          <label>
+            Nome
+            <input id="c-name" placeholder="Ex: Curupira">
+          </label>
+          <label>
+            Titulo
+            <input id="c-title" placeholder="Guardiao dos caminhos">
+          </label>
+          <label>
+            Tipo
+            <select id="c-type">
+              <option value="entidade">Entidade</option>
+              <option value="humano">Humano</option>
+              <option value="criatura">Criatura</option>
+              <option value="prole">Prole</option>
+            </select>
+          </label>
+          <label>
+            Regiao / tribo
+            <input id="c-region" placeholder="Mata dos Caminhos Trocados">
+          </label>
+          <label>
+            Tags
+            <input id="c-tag" placeholder="mata, protecao, rastros">
+          </label>
+          <label>
+            Imagem da pasta `imagens`
+            <select id="c-image-select">
+              <option value="">Carregando imagens...</option>
+            </select>
+          </label>
+          <label>
+            Ou caminho manual
+            <input id="c-image-path" placeholder="imagens/nome-da-imagem.jpg">
+          </label>
+          <label>
+            Descricao
+            <textarea id="c-desc" placeholder="Resumo para aparecer no card"></textarea>
+          </label>
+          <label>
+            Historia
+            <textarea id="c-historia" placeholder="Lore da ficha"></textarea>
+          </label>
+          <label>
+            Habilidades da ficha
+            <textarea id="c-poderes" placeholder="Tecnicas, poderes conhecidos ou trilha de evolucao"></textarea>
+          </label>
+          <label>
+            Curiosidades
+            <textarea id="c-curiosidades" placeholder="Notas de campanha"></textarea>
+          </label>
+          <label>
+            Cor do nome
+            <input id="c-color" type="color" value="#e3a331">
+          </label>
+          <button class="primary" type="button" data-save-character>Salvar no banco</button>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <a class="floating-admin" href="admin.html" aria-label="Abrir painel admin">Admin</a>
+
+  <script src="js/site.js"></script>
+  <script src="js/admin-global.js"></script>
+</body>
+</html>

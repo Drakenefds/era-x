@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Personagens • Era X</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="page personagens-bg">
+
+<header class="navbar">
+  <div class="logo">
+    <div class="logo-icon">F</div>
+    <div>
+      <strong>Folclore Brasileiro</strong>
+      <small>Era X</small>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html">Início</a>
+    <a class="active">Personagens</a>
+    <a href="equipe.html">Equipe</a>
+  </nav>
+</header>
+
+<section class="hero hero-small">
+  <div class="hero-content">
+    <h1>Personagens</h1>
+    <p>Entidades, humanos e criaturas do Brasil mítico</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="filters">
+    <button class="active" onclick="filterCards('all',event)">Todos</button>
+    <button onclick="filterCards('entidade',event)">Entidades</button>
+    <button onclick="filterCards('humano',event)">Humanos</button>
+    <button onclick="filterCards('criatura',event)">Criaturas</button>
+  </div>
+
+  <div class="cards"></div>
+
+</main>
+
+<!-- MODAL WIKI -->
+<div id="wikiModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeWiki()">×</span>
+
+    <img id="wikiImage" class="wiki-img">
+
+    <h2 id="wikiName"></h2>
+    <p id="wikiTitle" class="wiki-sub"></p>
+
+    <div class="wiki-info">
+      <span><strong>Tipo:</strong> <span id="wikiType"></span></span>
+      <span><strong>Região:</strong> <span id="wikiRegion"></span></span>
+      <span><strong>Tags:</strong> <span id="wikiTag"></span></span>
+    </div>
+
+    <div class="wiki-tabs" id="wikiTabs"></div>
+    <div id="wikiTabContent" class="wiki-content"></div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<button id="admin-toggle" class="admin-fab">Admin</button>
+
+<div id="admin-panel" class="admin-panel">
+  <h2>Painel Admin</h2>
+
+  <input id="c-name" placeholder="Nome">
+  <input id="c-title" placeholder="Título">
+  <select id="c-type">
+    <option value="entidade">Entidade</option>
+    <option value="humano">Humano</option>
+    <option value="criatura">Criatura</option>
+  </select>
+
+  <input id="c-region" placeholder="Região / Tribo">
+  <input id="c-tag" placeholder="Tags">
+
+  <textarea id="c-desc" placeholder="Descrição"></textarea>
+  <textarea id="c-historia" placeholder="História"></textarea>
+  <textarea id="c-poderes" placeholder="Poderes"></textarea>
+  <textarea id="c-curiosidades" placeholder="Curiosidades"></textarea>
+
+  <input id="c-image" type="file">
+  <input id="c-color" type="color" value="#00ff22">
+
+  <button onclick="saveChar()">Salvar</button>
+</div>
+
+<script src="js/personagens.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

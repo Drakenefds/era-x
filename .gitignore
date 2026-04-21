@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+# Banco local e logs de desenvolvimento.
+era_x.db
+server-*.log
+server-*.err.log
+tmp-render-test/
+
+# Configuracoes locais de editor.
+.vscode/

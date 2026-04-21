@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folclore Brasileiro | Era X</title>
+  <meta name="description" content="Servidor de RP e sistemas inspirados no folclore brasileiro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-classic">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Folclore Brasileiro - Era X">
+      <span class="brand-mark">F</span>
+      <span>
+        <strong>Folclore Brasileiro</strong>
+        <small>Era X</small>
+      </span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-menu">
+      <a href="#inicio">Início</a>
+      <a href="sistemas.html#leveis">Leveis</a>
+      <a href="sistemas.html#arvores">Proles</a>
+      <a href="sistemas.html#graca">Graça</a>
+      <a href="personagens.html">Personagens</a>
+      <a href="equipe.html">Equipe</a>
+      <a class="classic-login" href="admin.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero restored-home-hero" id="inicio" style="--hero-image:url('imagens/folclore.jpg')">
+      <div class="hero-copy">
+        <p class="eyebrow">Arquivo vivo de proles, entidades e encantados</p>
+        <h1>Era X Folclore Brasileiro</h1>
+        <h2>Servidor de RP · Aventura · Mitologia</h2>
+        <p>
+          Um site de apoio para RPG no Discord, feito para organizar sistemas de poderes,
+          fichas, regiões e narrativas inspiradas no folclore brasileiro.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="sistemas.html">Abrir sistemas</a>
+          <a class="button secondary" href="personagens.html">Ver personagens</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section intro-section">
+      <div class="section-heading">
+        <p class="eyebrow">Como usar</p>
+        <h2>Um grimório para narradores e jogadores</h2>
+      </div>
+      <div class="intro-grid">
+        <article class="feature-card">
+          <span class="feature-icon">01</span>
+          <h3>Poderes por leveis</h3>
+          <p>Habilidades de prole evoluem por estágios e consomem os leveis atuais do player no Arcane.</p>
+          <a href="sistemas.html#leveis">Ler regra</a>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">02</span>
+          <h3>Catálogo de proles</h3>
+          <p>Entidades, humanos marcados e criaturas podem ganhar fichas no estilo wiki, com história e poderes.</p>
+          <a href="personagens.html">Abrir catálogo</a>
+        </article>
+        <article class="feature-card">
+          <span class="feature-icon">03</span>
+          <h3>Brasil mítico</h3>
+          <p>Florestas, rios, cidades e ruínas guardam pactos antigos, maldições e territórios de entidades.</p>
+          <a href="#regioes">Explorar regiões</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section lore-band" id="enredo" style="--band-image:url('imagens/deuses-tupi-guarani.jpg')">
+      <div class="text-block">
+        <p class="eyebrow">Enredo base</p>
+        <h2>Quando a mata lembrou o nome dos deuses</h2>
+        <p>
+          No começo, os humanos caminhavam junto da terra: rios, sementes, trovões e bichos
+          não eram cenário, eram parentes antigos. Com o tempo, entidades se aproximaram demais
+          dos mortais, gerando filhos, pactos e linhagens capazes de tocar o mundo invisível.
+        </p>
+        <p>
+          Essa proximidade trouxe prosperidade, mas também abriu espaço para inveja, ruína e
+          disputas entre encantados. Anhangá viu nessa fraqueza uma chance de reorganizar o
+          sagrado pela força, e a Era X começa justamente quando os herdeiros desses pactos
+          precisam escolher que tipo de lenda vão se tornar.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="poderes">
+      <div class="section-heading">
+        <p class="eyebrow">Poderes & habilidades</p>
+        <h2>Trilhas de prole</h2>
+      </div>
+      <div class="catalog-grid">
+        <a class="catalog-item" href="sistemas.html#graca">
+          <span>Graça dos Grandes</span>
+          <small>Aura, físico semidivino e resistência mental.</small>
+        </a>
+        <a class="catalog-item" href="sistemas.html#mataria">
+          <span>Chamado da Mataria</span>
+          <small>Rastros, proteção da floresta e caça espiritual.</small>
+        </a>
+        <a class="catalog-item" href="sistemas.html#aguas">
+          <span>Canto das Águas</span>
+          <small>Encanto, correnteza, cura e ilusões de rio.</small>
+        </a>
+        <a class="catalog-item" href="sistemas.html#sombras">
+          <span>Marca de Anhangá</span>
+          <small>Medo, corrupção, pactos e domínio de assombrações.</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="section level-preview" id="leveis">
+      <div class="section-heading">
+        <p class="eyebrow">Regra central</p>
+        <h2>Leveis são moeda de maestria</h2>
+      </div>
+      <div class="rule-panel">
+        <p>
+          Os poderes de prole pedem níveis de 1 até 10. Quando o player atinge o level exato
+          necessário para upar uma habilidade, ele gasta esses leveis e volta para a estaca zero
+          no Arcane, pedindo para um administrador retirar a quantia.
+        </p>
+        <p>
+          O player pode guardar leveis para gastar de uma só vez. Exemplo: juntar level 15 para
+          comprar dois estágios, um de 5 leveis e outro de 10 leveis.
+        </p>
+        <a class="button primary" href="sistemas.html#leveis">Ver sistema completo</a>
+      </div>
+    </section>
+
+    <section class="section" id="regioes">
+      <div class="section-heading">
+        <p class="eyebrow">Mapa narrativo</p>
+        <h2>Onde a campanha pode acontecer</h2>
+      </div>
+      <div class="region-layout">
+        <article>
+          <img src="imagens/curupira.jpg" alt="Curupira em uma floresta escura">
+          <h3>Mata dos Caminhos Trocados</h3>
+          <p>Território de guardiões da floresta, trilhas que mudam de lugar e pactos quebrados.</p>
+        </article>
+        <article>
+          <img src="imagens/caipora.jpg" alt="Caipora em arte de floresta">
+          <h3>Serra da Caça Antiga</h3>
+          <p>Região de caçadores, espíritos de proteção animal e testes para quem pisa armado.</p>
+        </article>
+        <article>
+          <img src="imagens/anhanga.jpg" alt="Anhangá em ambiente sombrio">
+          <h3>Brejo de Anhangá</h3>
+          <p>Área corrompida por medo, culpa e promessas feitas no escuro.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <strong>Era X</strong>
+    <span>Folclore Brasileiro para RPG de mesa e Discord.</span>
+  </footer>
+
+  <a class="floating-admin" href="admin.html" aria-label="Abrir painel admin">Admin</a>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
