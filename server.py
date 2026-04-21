@@ -242,6 +242,19 @@ def init_db() -> None:
               tag_id INTEGER NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
               PRIMARY KEY (character_id, tag_id)
             );
+
+            CREATE TABLE IF NOT EXISTS visitor_logs (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              visitor_key TEXT NOT NULL UNIQUE,
+              ip_address TEXT DEFAULT '',
+              user_agent TEXT DEFAULT '',
+              first_path TEXT DEFAULT '',
+              last_path TEXT DEFAULT '',
+              referrer TEXT DEFAULT '',
+              visits INTEGER NOT NULL DEFAULT 1,
+              first_seen TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              last_seen TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
             """
         )
 
@@ -334,6 +347,8 @@ class EraXHandler(BaseHTTPRequestHandler):
             return self.api_tags()
         if path == "/api/assets":
             return self.api_assets()
+        if path == "/api/visitors":
+            return self.api_visitors()
         return self.serve_static(path)
 
     def do_POST(self) -> None:
@@ -638,6 +653,76 @@ class EraXHandler(BaseHTTPRequestHandler):
                     assets.append({"name": path.name, "path": f"imagens/{path.name}"})
         json_response(self, 200, {"assets": assets})
 
+    def api_visitors(self) -> None:
+        if not self.require_user(("admin",)):
+            return
+        with connect() as conn:
+            stats = conn.execute(
+                """
+                SELECT
+                  COUNT(*) AS visitors,
+                  COALESCE(SUM(visits), 0) AS visits,
+                  SUM(CASE WHEN date(last_seen) = date('now') THEN 1 ELSE 0 END) AS today
+                FROM visitor_logs
+                """
+            ).fetchone()
+            rows = conn.execute(
+                """
+                SELECT
+                  visitor_key,
+                  ip_address,
+                  user_agent,
+                  first_path,
+                  last_path,
+                  referrer,
+                  visits,
+                  first_seen,
+                  last_seen
+                FROM visitor_logs
+                ORDER BY last_seen DESC
+                LIMIT 100
+                """
+            ).fetchall()
+        json_response(self, 200, {"stats": dict(stats), "visitors": [dict(row) for row in rows]})
+
+    def client_ip(self) -> str:
+        forwarded = self.headers.get("X-Forwarded-For", "")
+        if forwarded:
+            return forwarded.split(",", 1)[0].strip()[:96]
+        real_ip = self.headers.get("X-Real-IP", "")
+        if real_ip:
+            return real_ip.strip()[:96]
+        return str(self.client_address[0])[:96]
+
+    def record_visit(self, path: str) -> None:
+        if path == "/admin.html":
+            return
+
+        ip_address = self.client_ip()
+        user_agent = self.headers.get("User-Agent", "").strip()[:500]
+        referrer = self.headers.get("Referer", "").strip()[:500]
+        visitor_key = hashlib.sha256(f"{ip_address}|{user_agent}".encode("utf-8")).hexdigest()[:24]
+
+        try:
+            with connect() as conn:
+                conn.execute(
+                    """
+                    INSERT INTO visitor_logs
+                    (visitor_key, ip_address, user_agent, first_path, last_path, referrer)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(visitor_key) DO UPDATE SET
+                      ip_address = excluded.ip_address,
+                      user_agent = excluded.user_agent,
+                      last_path = excluded.last_path,
+                      referrer = COALESCE(NULLIF(excluded.referrer, ''), visitor_logs.referrer),
+                      visits = visitor_logs.visits + 1,
+                      last_seen = CURRENT_TIMESTAMP
+                    """,
+                    (visitor_key, ip_address, user_agent, path, path, referrer),
+                )
+        except sqlite3.Error as error:
+            print(f"Falha ao registrar visita: {error}")
+
     def serve_static(self, raw_path: str) -> None:
         path = urllib.parse.unquote(raw_path)
         if path == "/":
@@ -648,6 +733,8 @@ class EraXHandler(BaseHTTPRequestHandler):
             return
         content_type = mimetypes.guess_type(str(target))[0] or "application/octet-stream"
         body = target.read_bytes()
+        if content_type.startswith("text/html"):
+            self.record_visit(path)
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))

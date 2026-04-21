@@ -5,6 +5,8 @@
     tags: [],
     characters: [],
     users: [],
+    visitors: [],
+    visitorStats: null,
     selectedTagId: null
   };
 
@@ -93,6 +95,7 @@
     setText("[data-metric-characters]", String(state.characters.length || 0));
     setText("[data-metric-tags]", String(state.tags.length || 0));
     setText("[data-metric-users]", state.user && state.user.role === "admin" ? String(state.users.length || 0) : "-");
+    setText("[data-metric-visitors]", state.user && state.user.role === "admin" && state.visitorStats ? String(state.visitorStats.visitors || 0) : "-");
     setText("[data-metric-role]", state.user ? state.user.role : "-");
   }
 
@@ -111,8 +114,11 @@
       await loadTagTools();
       if (state.user && state.user.role === "admin") {
         await loadUsers();
+        await loadVisitors();
       } else {
         state.users = [];
+        state.visitors = [];
+        state.visitorStats = null;
         updateMetrics();
       }
     } catch (error) {
@@ -121,6 +127,8 @@
       state.tags = [];
       state.characters = [];
       state.users = [];
+      state.visitors = [];
+      state.visitorStats = null;
       setStatus("Banco offline.", "Rode `python server.py` e acesse por http://localhost:5500/admin.html.", false);
       setPanels();
     }
@@ -139,7 +147,10 @@
       setPanels();
       await loadAssets();
       await loadTagTools();
-      if (state.user.role === "admin") await loadUsers();
+      if (state.user.role === "admin") {
+        await loadUsers();
+        await loadVisitors();
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -148,6 +159,8 @@
   async function logout() {
     await api("/api/logout", { method: "POST", body: "{}" }).catch(function () {});
     state.user = null;
+    state.visitors = [];
+    state.visitorStats = null;
     setPanels();
     setStatus("Voce saiu.", "Entre novamente para editar o banco.", true);
   }
@@ -188,6 +201,100 @@
     } catch (error) {
       state.users = [];
       list.textContent = error.message;
+      updateMetrics();
+    }
+  }
+
+  function formatDateTime(value) {
+    if (!value) return "-";
+    const date = new Date(String(value).replace(" ", "T") + "Z");
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function shortUserAgent(value) {
+    const text = String(value || "");
+    if (!text) return "Navegador nao informado";
+    const browser = text.includes("Edg/") ? "Edge" :
+      text.includes("Chrome/") ? "Chrome" :
+      text.includes("Firefox/") ? "Firefox" :
+      text.includes("Safari/") ? "Safari" :
+      "Navegador";
+    const system = text.includes("Android") ? "Android" :
+      text.includes("iPhone") || text.includes("iPad") ? "iOS" :
+      text.includes("Windows") ? "Windows" :
+      text.includes("Mac OS") ? "macOS" :
+      text.includes("Linux") ? "Linux" :
+      "Sistema nao identificado";
+    return `${browser} / ${system}`;
+  }
+
+  function renderVisitorSummary(stats) {
+    const box = qs("[data-visitor-summary]");
+    if (!box) return;
+    const values = [
+      stats && stats.visitors ? stats.visitors : 0,
+      stats && stats.visits ? stats.visits : 0,
+      stats && stats.today ? stats.today : 0
+    ];
+    qsa("strong", box).forEach(function (item, index) {
+      item.textContent = String(values[index] || 0);
+    });
+  }
+
+  function renderVisitors() {
+    const list = qs("[data-visitor-list]");
+    if (!list) return;
+    renderVisitorSummary(state.visitorStats || {});
+    list.innerHTML = "";
+
+    if (!state.visitors.length) {
+      list.innerHTML = `<p class="muted-text">Nenhum acesso publico registrado ainda.</p>`;
+      return;
+    }
+
+    state.visitors.forEach(function (visitor) {
+      const item = document.createElement("article");
+      item.className = "visitor-row";
+      const code = `VX-${String(visitor.visitor_key || "").slice(0, 8).toUpperCase()}`;
+      item.innerHTML = `
+        <div class="visitor-main">
+          <strong>${escapeHtml(code)}</strong>
+          <small>${escapeHtml(visitor.ip_address || "IP nao informado")}</small>
+        </div>
+        <div>
+          <span>${Number(visitor.visits || 0)} acesso${Number(visitor.visits || 0) === 1 ? "" : "s"}</span>
+          <small>Ultima visita: ${escapeHtml(formatDateTime(visitor.last_seen))}</small>
+        </div>
+        <div>
+          <span>${escapeHtml(visitor.last_path || visitor.first_path || "/")}</span>
+          <small>${escapeHtml(shortUserAgent(visitor.user_agent))}</small>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  async function loadVisitors() {
+    const list = qs("[data-visitor-list]");
+    if (!list || !state.user || state.user.role !== "admin") return;
+    try {
+      const data = await api("/api/visitors");
+      state.visitorStats = data.stats || {};
+      state.visitors = data.visitors || [];
+      renderVisitors();
+      updateMetrics();
+    } catch (error) {
+      state.visitorStats = null;
+      state.visitors = [];
+      list.textContent = error.message;
+      renderVisitorSummary({});
       updateMetrics();
     }
   }
@@ -709,6 +816,7 @@
       ["[data-create-tag]", createTag],
       ["[data-save-character-tags]", saveCharacterTags],
       ["[data-refresh-tags]", loadTagTools],
+      ["[data-refresh-visitors]", loadVisitors],
       ["[data-preview-admin-visual]", previewAdminVisual],
       ["[data-confirm-admin-visual]", confirmAdminVisual],
       ["[data-cancel-admin-visual]", cancelAdminVisual]

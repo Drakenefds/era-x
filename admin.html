@@ -59,6 +59,10 @@
           <small>Contas</small>
           <strong data-metric-users>0</strong>
         </article>
+        <article data-admin-only>
+          <small>Visitantes</small>
+          <strong data-metric-visitors>0</strong>
+        </article>
         <article>
           <small>Acesso</small>
           <strong data-metric-role>-</strong>
@@ -158,6 +162,34 @@
             </summary>
             <div class="admin-section-body">
               <div class="user-list" data-user-list></div>
+            </div>
+          </details>
+
+          <details class="admin-section admin-collapsible admin-reveal" data-admin-only>
+            <summary>
+              <span class="admin-summary-kicker">Visitantes</span>
+              <strong>Registro de acessos</strong>
+            </summary>
+            <div class="admin-section-body">
+              <p class="muted-text">Mostra acessos publicos ao site por identificador tecnico, IP, pagina e navegador.</p>
+              <div class="visitor-summary" data-visitor-summary>
+                <article>
+                  <small>Visitantes unicos</small>
+                  <strong>0</strong>
+                </article>
+                <article>
+                  <small>Acessos totais</small>
+                  <strong>0</strong>
+                </article>
+                <article>
+                  <small>Ativos hoje</small>
+                  <strong>0</strong>
+                </article>
+              </div>
+              <div class="admin-actions visitor-actions">
+                <button class="secondary-button" type="button" data-refresh-visitors>Atualizar visitantes</button>
+              </div>
+              <div class="visitor-list" data-visitor-list></div>
             </div>
           </details>
 
