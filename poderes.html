@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poderes Folclóricos | Era X</title>
+  <meta name="description" content="Poderes passivos e ativos de 0 a 100 para seres do folclore brasileiro no Era X.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page floating-shell powers-page">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Folclore Brasileiro - Era X">
+      <span class="brand-mark">F</span>
+      <span>
+        <strong>Folclore Brasileiro</strong>
+        <small>Grimório de Poderes</small>
+      </span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-menu">
+      <a href="index.html">Início</a>
+      <a href="sistemas.html#leveis">Leveis</a>
+      <a class="active" href="poderes.html">Poderes</a>
+      <a href="sistemas.html#arvores">Proles</a>
+      <a href="personagens.html">Personagens</a>
+      <a href="equipe.html">Equipe</a>
+      <a class="classic-login" href="admin.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero inner-hero powers-hero" style="--hero-image:url('imagens/Deusestupi Guarania.jpg')">
+      <div class="hero-copy">
+        <p class="eyebrow">Passivos e ativos de 0 a 100</p>
+        <h1>Grimório Folclórico</h1>
+        <p>
+          Trilhas inspiradas em tradição oral, relatos populares e contos regionais do Brasil.
+          Use como base de RP, ajustando custo, alcance e consequência conforme a mesa.
+        </p>
+      </div>
+    </section>
+
+    <section class="powers-shell" id="grimorio">
+      <aside class="powers-index" aria-label="Categorias de poderes">
+        <strong>Livro de Feitiço</strong>
+        <a href="#deuses">Deuses</a>
+        <a href="#lendas">Lendas</a>
+        <a href="#devotos">Devotos</a>
+        <a href="#espiritos">Espíritos</a>
+        <a href="#encantados-maldicoes">Encantados e Maldições</a>
+      </aside>
+
+      <section class="powers-content">
+        <div class="powers-intro">
+          <p class="eyebrow">Arquivo expansível</p>
+          <h2>Poderes por marco de domínio</h2>
+          <p>
+            Cada ser tem um poder passivo e um poder ativo nos marcos 0, 5, 10, 15, 20, 25,
+            30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95 e 100.
+          </p>
+          <p class="powers-note">
+            Observação: “relatos” aqui significa tradição oral, registros populares e causos narrados
+            em comunidades. A página não trata lendas como fatos históricos comprovados.
+          </p>
+        </div>
+
+        <div class="powers-tools">
+          <label>
+            Buscar ser
+            <input type="search" id="powerSearch" placeholder="Ex: Saci, Tupã, Onça...">
+          </label>
+          <label>
+            Categoria
+            <select id="powerCategory">
+              <option value="all">Todas</option>
+              <option value="deuses">Deuses</option>
+              <option value="lendas">Lendas</option>
+              <option value="devotos">Devotos</option>
+              <option value="espiritos">Espíritos</option>
+              <option value="encantados-maldicoes">Encantados e Maldições</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="powersCatalog" class="powers-catalog" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <strong>Era X</strong>
+    <span>Poderes inspirados no folclore brasileiro para consulta de RP.</span>
+  </footer>
+
+  <a class="floating-admin" href="admin.html" aria-label="Abrir painel admin">Admin</a>
+
+  <script src="js/site.js"></script>
+  <script src="js/poderes.js"></script>
+</body>
+</html>
